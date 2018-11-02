@@ -34,6 +34,12 @@ Pizza.prototype.addToppings = function(topping) {
   this.toppings.push(topping);
 }
 
+function makeFirstCharUpper(word) {
+  const firstLetter = /\b\w/g;
+  let newWord = word.replace(firstLetter, word[0].toUpperCase());
+
+  return newWord.split("_").join(" ");
+}
 
 $(function() {
   var pizzaria1 = new Pizzaria();
@@ -42,17 +48,18 @@ $(function() {
   for (let prop in pizzaria1.pizzaSizesPrice) {
     $("#pizzeria-sizes").append(`
       <label class="btn btn-secondary">
-        <input type="radio" name="pizza-size" id="${prop}" autocomplete="off">${prop}
+        <input type="radio" name="pizza-size" id="${prop}" autocomplete="off">${makeFirstCharUpper(prop)}
       </label>`);
     }
 
   // renders pizza toppings based on pizzaria constructor
   for (let prop in pizzaria1.pizzaToppingsPrice){
+
     $("#pizzeria-toppings").append(`
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="${prop}" id="${prop}">
         <label class="form-check-label" for="${prop}">
-          ${prop}
+          ${makeFirstCharUpper(prop)}
         </label>
       </div>`);
     }
