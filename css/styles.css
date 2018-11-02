@@ -44,3 +44,7 @@
   /* display: block; */
   width: 100px;
 }
+
+.missing {
+  border-color: #dc3545;
+}
