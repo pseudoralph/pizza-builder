@@ -44,7 +44,7 @@ function ui_makeFirstCharUpper(word) {
 
 function ui_orderReset() {
   $("input").off('change');
-  
+
   $("input").prop("disabled",false);
   $("input").prop("checked",false);
 
@@ -97,9 +97,33 @@ function piePreparer(pizzaria1) {
 function pieViewer(pizzaria1) {
   console.log(pizzaria1);
   let currentPizza = pizzaria1.orderUp[pizzaria1.orderUp.length-1]
+
+  let template = `<div class="card">
+      <div class="card-header" id="pizzaHeading${currentPizza.pizzaId}">
+        <h5 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePizza${currentPizza.pizzaId}" aria-expanded="false" aria-controls="collapsePizza${currentPizza.pizzaId}">🍕 ${currentPizza.size} pizza</button>
+        </h5>
+      </div>
+
+      <div id="collapsePizza${currentPizza.pizzaId}" class="collapse hide" aria-labelledby="pizzaHeading${currentPizza.pizzaId}" data-parent="#all-pizza-orders">
+        <div class="card-body">
+
+
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+
+          <button type="button" class="btn btn-primary" id="delivery">
+            Delivery <span class="badge badge-light">🚚</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+    console.log(template)
+
+
   let htmlOutput = `<li>${currentPizza.size} pizza\t\t\t\t$${currentPizza.price}</li>`
 
-  return htmlOutput
+  return template
 
 }
 
@@ -123,18 +147,15 @@ $(function() {
   });
 
   $("#bake").click(function() {
-    $("#in-basket").append(pieViewer(pizzaria1));
+
+    $("#all-pizza-orders").append(pieViewer(pizzaria1));
+    // $("#in-basket").append(pieViewer(pizzaria1));
     ui_orderReset();
   });
 
   $("#cancel").click(function() {
     ui_orderReset();
   });
-
-
-
-
-
 
 
 

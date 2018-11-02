@@ -1,50 +1,29 @@
-.logo {
-  background-image: url('../img/chef.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 200px;
-  font-size: 35px;
-}
-
-.logo path {
-  fill: transparent;
-}
-
-.logo text {
-  fill: #FF9800;
-}
-
-.order-form {
-  margin: 20px 0;
+.all-pizzas, .order-form, .size-select, .ingredients  {
+  margin: 20px 0 !important;
 }
 
 .size-select {
-  margin: 20px 0 0;
+  margin-bottom: 0;
 }
 
-.ingredients {
-  margin: 20px 0;
+
+.all-pizzas .card-header button {
+  font-size: 22px;
 }
 
-.bake {
-  margin: 20px 0;
+.all-pizzas :hover, .all-pizzas :focus {
+  text-decoration: none;
 }
+
 
 #pizza-details {
   display: none;
-  /* background-color: #fff;
-  background-clip: border-box; */
   margin: 20px 0 0;
-
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
 }
 
-#bake, #cancel  {
-  /* display: block; */
-  width: 100px;
-}
+#delivery {
+  display:block;
 
-.missing {
-  border-color: #dc3545;
 }
