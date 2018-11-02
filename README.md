@@ -19,23 +19,38 @@ HTML, CSS, JS, and jQuery
 
 ## Specifications
 * It should let the user select a pizza size
-  * Input: Click on "small"
-  * Expected output: a blank pizza
+  * Input: Clicking on "small"
+  * Expected output: Small will be selected
+* It should let the user select pizza toppings
+  * Input: Clicking on a pizza toppings
+  * Expected output: Will accept a single pizza topping
+* It should let the user select multiple pizza toppings
+  * Input: Clicking on multiple pizza toppings
+  * Expected output: Will accept multiple pizza toppings
+* It should allow the user to review pizza order before submitting
+  * Input: Clicking on review order button
+  * Expected output: Will visually confirm the user's pizza selection
+* It should allow the user to submit the pizza to bake
+  * Input: Clicking on bake the bake button
+  * Expected output: Will visually confirm the user's pizza is now ready to bake
+* It should allow the user to cancel the pizza
+  * Input: Clicking on cancel button
+  * Expected output: Will reset all previous pizza settings
 
 ## Objectives
-- [ ] Code meets standards from previous weeks.
+- [x] Code meets standards from previous weeks.
 
-- [ ] Constructors and prototypes are used successfully.
+- [x] Constructors and prototypes are used successfully.
 
-- [ ] Application works as expected.
+- [x] Application works as expected.
 
-- [ ] Plain English specs are included in your README.
+- [x] Plain English specs are included in your README.
 
-- [ ] Required functionality is in place by the 5:00pm Friday deadline.
+- [x] Required functionality is in place by the 5:00pm Friday deadline.
 
-- [ ] Project is in a polished, portfolio-quality state.
+- [x] Project is in a polished, portfolio-quality state.
 
-- [ ] Project demonstrates an understanding of this week's concepts. If prompted, you can discuss your code with an instructor using correct terminology.
+- [x] Project demonstrates an understanding of this week's concepts. If prompted, you can discuss your code with an instructor using correct terminology.
 
 ---
 

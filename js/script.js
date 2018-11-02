@@ -95,13 +95,16 @@ function piePreparer(pizzaria1) {
 }
 
 function pieViewer(pizzaria1) {
-  console.log(pizzaria1);
+  // console.log(pizzaria1);
   let currentPizza = pizzaria1.orderUp[pizzaria1.orderUp.length-1]
 
-  let template = `<div class="card">
+  let htmlOutput = `<div class="card">
       <div class="card-header" id="pizzaHeading${currentPizza.pizzaId}">
         <h5 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePizza${currentPizza.pizzaId}" aria-expanded="false" aria-controls="collapsePizza${currentPizza.pizzaId}">🍕 ${currentPizza.size} pizza</button>
+          <button type="button" class="close float-right" aria-label="Close" id="delete-${currentPizza.pizzaId}">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </h5>
       </div>
 
@@ -118,12 +121,9 @@ function pieViewer(pizzaria1) {
       </div>
     </div>`;
 
-    console.log(template)
+  // let htmlOutput = `<li>${currentPizza.size} pizza\t\t\t\t$${currentPizza.price}</li>`
 
-
-  let htmlOutput = `<li>${currentPizza.size} pizza\t\t\t\t$${currentPizza.price}</li>`
-
-  return template
+  return htmlOutput
 
 }
 
@@ -156,6 +156,10 @@ $(function() {
   $("#cancel").click(function() {
     ui_orderReset();
   });
+
+  $("#all-pizza-orders").on('click','button.close', function() {
+    console.log(this.id)
+  })
 
 
 
