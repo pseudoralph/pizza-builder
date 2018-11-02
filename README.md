@@ -1,11 +1,11 @@
 # Pizza pie builder
 
-#### Pizza pie builder using JS constructors and prototypes
+#### Pizza pie builder using JS constructors and prototypes. November 2, 2018
 
 #### By _DEV_
 
 ## Description
-This webapp will take the user through the pizza building process allowing him or her to choose pizza size and toppings. User will then receive price for the pie they've built. 
+This webapp will take the user through the pizza building process allowing him or her to choose pizza size and toppings. User will then receive price for the pie they've built.
 
 ## Setup/Installation Requirements
 * clone this repository using `git clone https://github.com/pseudoralph/pizza-builder`
@@ -18,8 +18,8 @@ Alternatively, this site can be viewed at https://pseudoralph.github.io/pizza-bu
 HTML, CSS, JS, and jQuery
 
 ## Specifications
-* It should let the user create a pizza
-  * Input: Click "add pizza"
+* It should let the user select a pizza size
+  * Input: Click on "small"
   * Expected output: a blank pizza
 
 ## Objectives
@@ -43,7 +43,7 @@ HTML, CSS, JS, and jQuery
 
 MIT License
 
-Copyright (c) 2018, _DEV_
+Copyright (c) 2018, Ralph Perdomo
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

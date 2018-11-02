@@ -42,6 +42,13 @@ function makeFirstCharUpper(word) {
 }
 
 $(function() {
+
+  function pieResetter() {
+    $("input").prop("checked",false);
+    $("label").removeClass("active");
+  }
+
+  // inits a new pizzaria
   var pizzaria1 = new Pizzaria();
 
   // renders pizza sizes and prices based on pizzaria constructor
@@ -64,7 +71,12 @@ $(function() {
       </div>`);
     }
 
-  $("#buildpie").click(function(){
+  // $("input").change(function() {
+  //   console.log('something change')
+  //
+  // })
+
+  $("#prepare").click(function(){
     var pizzaSize;
 
     $("input[name=pizza-size]:checked").length ? (pizzaSize = $("input[name=pizza-size]:checked").prop("id")) : (pizzaSize = "small");
@@ -83,9 +95,14 @@ $(function() {
     var pizzaSummary = `<p>One <span style="text-decoration: underline;">${currentPizza.size}</span> pizza with:</p> <ul><li>${currentPizza.toppings.join("</li>\n<li>")}</ul><p>Amount due: $${currentPizza.price}</p>`;
 
     // display pizza details
-    $("#order-details").show();
-    $("#pizza-details").html(pizzaSummary);
+    // $("#order-details").show();
+    $("#pizza-details").show();
+    $("#pizza-details").prepend(pizzaSummary);
 
+  })
 
+  $("#newpie").click(function() {
+    pieResetter();
+    $("#order-details").hide();
   })
 })

@@ -17,44 +17,52 @@
     <title>Pizza builder</title>
   </head>
   <body>
-    <div class="container-fluid">
-
+    <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="pizzeria-sizes">
+
+
+
+        <div class="col-md-4 order-form">
+
+          <div class="btn-group btn-group-toggle size-select" data-toggle="buttons" id="pizzeria-sizes">
             <!-- dynamic pizza sizes here -->
           </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-3" id="pizzeria-toppings">
-          <!-- dynamic pizza toppings here -->
-        </div>
-
-      </div>
-
-      <div class="row">
-        <div class="col-md-3">
-          <div class="col-auto">
-            <button type="button" name="button" id="buildpie">Build pie</button>
+          <div class="ingredients" id="pizzeria-toppings">
+            <!-- dynamic pizza toppings here -->
           </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-3" id="order-details">
-          <p>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Order details</button>
-          </p>
-
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body" id="pizza-details">
-            </div>
+          <div class="bake">
+              <!-- <button class="btn btn-primary"  type="button" name="button" id="buildpie">Review order</button> -->
           </div>
-        </div>
-      </div>
 
+          <div id="order-details">
+
+              <button class="btn btn-primary" type="button" id="prepare">Review order</button>
+
+              <div class=" card-body" id="pizza-details">
+                <input class="btn btn-primary" type="button" id="bake" value="Bake">
+                <input class="btn btn-secondary float-right" type="button" id="cancel" value="Cancel">
+              </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md3" id="all-pizzas">
+          <ul id="in-basket">
+            <li>none</li>
+
+          </ul>
+
+
+        </div>
+
+
+
+
+      </div>
     </div>
+
   </body>
 </html>

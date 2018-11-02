@@ -1,3 +1,46 @@
-#order-details {
+.logo {
+  background-image: url('../img/chef.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 200px;
+  font-size: 35px;
+}
+
+.logo path {
+  fill: transparent;
+}
+
+.logo text {
+  fill: #FF9800;
+}
+
+.order-form {
+  margin: 20px 0;
+}
+
+.size-select {
+  margin: 20px 0 0;
+}
+
+.ingredients {
+  margin: 20px 0;
+}
+
+.bake {
+  margin: 20px 0;
+}
+
+#pizza-details {
   display: none;
+  /* background-color: #fff;
+  background-clip: border-box; */
+  margin: 20px 0 0;
+
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+}
+
+#bake, #cancel  {
+  /* display: block; */
+  width: 100px;
 }
