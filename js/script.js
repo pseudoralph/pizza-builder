@@ -2,17 +2,13 @@
 function Pizzaria() {
   this.pizzasMade = 0;
   this.pizzaSizesPrice = {small: 10, medium: 15, large: 20};
-  this.pizzaToppingsPrice = {cheese: 1, pepperoni: 1, mushrooms: 1};
+  this.pizzaToppingsPrice = {cheese: 1, pepperoni: 1, ham:1, sausage: 1, mushroom: 1, onion: 1, garlic: 1, green_peppers: 1, pineapple: 1};
 
   this.orderUp = [];
 }
 
 Pizzaria.prototype.newPie = function(size) {
-  // this.pizzasMade++;
   this.orderUp.push(new Pizza(this.pizzasMade++,size));
-  // this.currentOrder = new Pizza(this.pizzasMade,size);
-
-
 }
 
 function Pizza(id,size) {
@@ -26,7 +22,9 @@ Pizza.prototype.addToppings = function(topping) {
   this.toppings.push(topping)
 }
 
+Pizza.prototype.calcPrice = function() {
 
+}
 
 Pizza.prototype.display = function() {
   return this
@@ -35,11 +33,7 @@ Pizza.prototype.display = function() {
 $(function() {
   var pizzaria1 = new Pizzaria()
 
-  // uiSizes();
-
-  console.log(pizzaria1.pizzaToppingsPrice)
-  console.log(pizzaria1.pizzaSizesPrice)
-
+  // renders pizza sizes and prices based on pizzaria constructor
   for (let prop in pizzaria1.pizzaSizesPrice) {
     $("#pizzeria-sizes").append(`
       <label class="btn btn-secondary">
@@ -47,12 +41,17 @@ $(function() {
       </label>`);
     }
 
+  // renders pizza toppings based on pizzaria constructor
+  for (let prop in pizzaria1.pizzaToppingsPrice){
 
-
-  // pizzaria1.pizzaSizesPrice
-  //
-  // uiSizes()
-
+    $("#pizzeria-toppings").append(`
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="${prop}" id="${prop}">
+        <label class="form-check-label" for="${prop}">
+          ${prop}
+        </label>
+      </div>`);
+    }
 
   $("#buildpie").click(function(){
     var pizzaSize;
@@ -63,21 +62,15 @@ $(function() {
 
     var currentPizza = pizzaria1.orderUp[pizzaria1.orderUp.length-1];
 
-    currentPizza.addToppings("cheese")
-    currentPizza.addToppings("pepperoni")
-    currentPizza.addToppings("mushrooms")
+    $("input[type=checkbox]:checked").each(function(){
+      var top = $(this).val();
+      currentPizza.addToppings(top.toString());
+    })
 
     console.log(currentPizza)
 
-
-
-    // var output = pizzaria1.orderUp[pizzaria1.orderUp.length-1].display()
-    // console.log(output.size, output.toppings)
-
-    // console.log(output)
-
-
-
+    // display pizza details
+    $("#order-details").show();
     $("#pizza-details").text(currentPizza.size +" pizza \n with: " +currentPizza.toppings.join(", "))
 
 
