@@ -41,42 +41,57 @@ function makeFirstCharUpper(word) {
   return newWord.split("_").join(" ");
 }
 
+
+
 $(function() {
 
-  function pieResetter() {
+  function ui_orderReset() {
+    // strictly restores UI state
+    $("input").prop("disabled",false);
     $("input").prop("checked",false);
-    $("label").removeClass("active");
+
+    $("#pizza-details").hide();
+    $("#pizza-summary").empty();
+
+    $("#review").removeClass("btn-secondary");
+    $("#review").addClass("btn-primary");
   }
 
   // inits a new pizzaria
-  var pizzaria1 = new Pizzaria();
 
-  // renders pizza sizes and prices based on pizzaria constructor
-  for (let prop in pizzaria1.pizzaSizesPrice) {
-    $("#pizzeria-sizes").append(`
-      <label class="btn btn-secondary">
-        <input type="radio" name="pizza-size" id="${prop}" autocomplete="off">${makeFirstCharUpper(prop)}
-      </label>`);
+  function ui_pizzaSizes(pizzaria1) {
+    // renders pizza sizes and prices based on pizzaria constructor
+    let htmlOutput = [];
+
+    for (let prop in pizzaria1.pizzaSizesPrice) {
+      htmlOutput.push(`<label class="btn btn-secondary">\n\t<input type="radio" name="pizza-size" id="${prop}" autocomplete="off">${makeFirstCharUpper(prop)}</label>\n`);
+      }
+      return htmlOutput.join("")
     }
 
-  // renders pizza toppings based on pizzaria constructor
-  for (let prop in pizzaria1.pizzaToppingsPrice){
+    function ui_pizzaToppings(pizzaria1) {
+      // renders pizza toppings based on pizzaria constructor
+      let htmlOutput = [];
 
-    $("#pizzeria-toppings").append(`
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="${prop}" id="${prop}">
-        <label class="form-check-label" for="${prop}">
-          ${makeFirstCharUpper(prop)}
-        </label>
-      </div>`);
+      for (let prop in pizzaria1.pizzaToppingsPrice){
+        htmlOutput.push(`<div class="form-check">\n\t<input class="form-check-input" type="checkbox" value="${prop}" id="${prop}">\n\t<label class="form-check-label" for="${prop}">${makeFirstCharUpper(prop)}</label>\n</div>\n`);
+      }
+      return htmlOutput.join("");
     }
 
-  // $("input").change(function() {
-  //   console.log('something change')
-  //
-  // })
+    // builds dynamic UI elements
+    var pizzaria1 = new Pizzaria();
+    $("#pizzeria-sizes").append(ui_pizzaSizes(pizzaria1));
+    $("#pizzeria-toppings").append(ui_pizzaToppings(pizzaria1));
 
-  $("#prepare").click(function(){
+
+
+  $("#cancel").click(function() {
+    console.log('cancel')
+    pieResetter();
+  })
+
+  $("#review").click(function(){
     var pizzaSize;
 
     $("input[name=pizza-size]:checked").length ? (pizzaSize = $("input[name=pizza-size]:checked").prop("id")) : (pizzaSize = "small");
@@ -94,15 +109,19 @@ $(function() {
 
     var pizzaSummary = `<p>One <span style="text-decoration: underline;">${currentPizza.size}</span> pizza with:</p> <ul><li>${currentPizza.toppings.join("</li>\n<li>")}</ul><p>Amount due: $${currentPizza.price}</p>`;
 
-    // display pizza details
-    // $("#order-details").show();
     $("#pizza-details").show();
-    $("#pizza-details").prepend(pizzaSummary);
+    console.log(currentPizza);
+
+    $("#pizza-summary").html(pizzaSummary);
+
+    $("#review").removeClass("btn-primary");
+    $("#review").addClass("btn-secondary");
+
+    $("input").prop("disabled",true)
+
+    $("#review").off('click');
 
   })
 
-  $("#newpie").click(function() {
-    pieResetter();
-    $("#order-details").hide();
-  })
+
 })

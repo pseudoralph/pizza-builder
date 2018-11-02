@@ -24,7 +24,7 @@
 
         <div class="col-md-4 order-form">
 
-          <div class="btn-group btn-group-toggle size-select" data-toggle="buttons" id="pizzeria-sizes">
+          <div class="size-select btn-group btn-group-toggle " data-toggle="buttons" id="pizzeria-sizes">
             <!-- dynamic pizza sizes here -->
           </div>
 
@@ -32,18 +32,19 @@
             <!-- dynamic pizza toppings here -->
           </div>
 
-          <div class="bake">
-              <!-- <button class="btn btn-primary"  type="button" name="button" id="buildpie">Review order</button> -->
-          </div>
 
           <div id="order-details">
 
-              <button class="btn btn-primary" type="button" id="prepare">Review order</button>
+            <button class="btn btn-primary" type="button" id="review">Review order</button>
 
-              <div class=" card-body" id="pizza-details">
-                <input class="btn btn-primary" type="button" id="bake" value="Bake">
-                <input class="btn btn-secondary float-right" type="button" id="cancel" value="Cancel">
+            <div class="card-body" id="pizza-details">
+              <div id="pizza-summary">
+                <!-- dynamic pizza summary and pricing here -->
               </div>
+
+              <button class="btn btn-primary" type="button" id="bake">Bake</button>
+              <button class="btn btn-secondary float-right" type="button" id="cancel">Start over</button>
+            </div>
 
           </div>
 
@@ -51,7 +52,6 @@
 
         <div class="col-md3" id="all-pizzas">
           <ul id="in-basket">
-            <li>none</li>
 
           </ul>
 
