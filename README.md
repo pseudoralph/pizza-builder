@@ -1,8 +1,8 @@
 # Pizza pie builder
 
-#### Pizza pie builder using JS constructors and prototypes. November 2, 2018
+#### Pizza pie builder using JS constructors and prototypes.
 
-#### By _DEV_
+#### By Ralph Perdomo, November 2, 2018
 
 ## Description
 This webapp will take the user through the pizza building process allowing him or her to choose pizza size and toppings. User will then receive price for the pie they've built.

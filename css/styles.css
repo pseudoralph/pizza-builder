@@ -6,6 +6,10 @@
   margin-bottom: 0;
 }
 
+.delivery {
+  margin: 20px 0 0;
+}
+
 
 .all-pizzas .card-header button {
   font-size: 22px;

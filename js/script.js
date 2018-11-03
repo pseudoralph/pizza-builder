@@ -28,6 +28,8 @@ function Pizza(id,size) {
 
   this.toppings = [];
   this.price = 0;
+
+  this.delivery = 2;
 }
 
 Pizza.prototype.addToppings = function(topping) {
@@ -89,7 +91,7 @@ function piePreparer(pizzaria1) {
 
   pizzaria1.calcPrice(currentPizza);
 
-  var pizzaSummary = `<p>One <span style="text-decoration: underline;">${currentPizza.size}</span> pizza with:</p> <ul><li>${currentPizza.toppings.join("</li>\n<li>")}</ul><p>Amount due: $${currentPizza.price}</p>`;
+  var pizzaSummary = `<p>One <span style="text-decoration: underline;">${currentPizza.size}</span> pizza with:</p> <ul><li>${currentPizza.toppings.join("</li>\n<li>")}</ul><p>Amount due: $<span id="is-delivered">${currentPizza.price}</span</p>`;
 
   return pizzaSummary;
 }
@@ -139,10 +141,20 @@ $(function() {
     $("#pizza-summary").html(piePreparer(pizzaria1));
     $("#pizza-details").show();
 
-    $("input").change(function() {
-      console.log('change')
-      $("#cancel").click();
-    });
+    console.log(pizzaria1)
+
+    $("input#delivery").change(function() {
+      $("input#delivery").prop("checked") ? ($("#is-delivered").text('1111')) : ($("#is-delivered").text('666'))
+
+
+    })
+
+
+
+    // $("input").change(function() {
+    //   console.log('change')
+    //   $("#cancel").click();
+    // });
 
   });
 
@@ -158,7 +170,10 @@ $(function() {
   });
 
   $("#all-pizza-orders").on('click','button.close', function() {
-    console.log(this.id)
+    const regex = /\d/g;
+    // console.log()
+
+    console.log(this.id.match(/\d+$/)[0])
   })
 
 
