@@ -10,24 +10,37 @@
   margin: 20px 0 0;
 }
 
-
 .all-pizzas .card-header button {
   font-size: 22px;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  padding-right: 1px;
+  padding-left: 1px;
+  color: #303030;
+}
+
+.all-pizzas .card-header button span {
+  background-color: #545b62;
+  color: white;
+  padding: 0px 7px;
+  border-radius: 5px;
+  font-size: 18px;
+  line-height: 32px;
 }
 
 .all-pizzas :hover, .all-pizzas :focus {
   text-decoration: none;
 }
 
+.all-pizzas i {
+  line-height: 35px;
+  color: #6c757d;
+}
 
 #pizza-details {
   display: none;
   margin: 20px 0 0;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
-}
-
-#delivery {
-  display:block;
-
 }
