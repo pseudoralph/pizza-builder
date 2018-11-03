@@ -1,5 +1,5 @@
 
-function Pizzaria() {
+function Pizzeria() {
   this.tracker = 0;
   this.pizzaSizesPrice = {small: 10, medium: 15, large: 20};
   this.pizzaToppingsPrice = {cheese: 1, pepperoni: 1, ham:1, sausage: 1, mushroom: 1, onion: 1, garlic: 1, green_peppers: 1, pineapple: 1};
@@ -7,11 +7,11 @@ function Pizzaria() {
   this.orderUp = [];
 }
 
-Pizzaria.prototype.newPie = function(size) {
+Pizzeria.prototype.newPie = function(size) {
   this.orderUp.push(new Pizza(this.tracker++,size));
 }
 
-Pizzaria.prototype.calcPrice = function(pizza) {
+Pizzeria.prototype.calcPrice = function(pizza) {
   var basePrice = this.pizzaSizesPrice[pizza.size];
   var addedToppings = 0;
 
@@ -29,7 +29,7 @@ function Pizza(id,size) {
   this.toppings = [];
   this.price = 0;
 
-  this.delivery = 2;
+  this.delivery = false;
 }
 
 Pizza.prototype.addToppings = function(topping) {
@@ -38,6 +38,7 @@ Pizza.prototype.addToppings = function(topping) {
 
 // UI functions
 function ui_makeFirstCharUpper(word) {
+  // makes first word upper case and changes _ character to space
   const firstLetter = /\b\w/g;
   let newWord = word.replace(firstLetter, word[0].toUpperCase());
 
@@ -52,44 +53,42 @@ function ui_orderReset() {
 
   $("#pizza-details").hide();
   $("#pizza-summary").empty();
-  //
-  // $("#review").removeClass("btn-secondary");
-  // $("#review").addClass("btn-primary");
+
 }
 
 // page rendering functionality dependtend on pizzaria settings
-function render_pizzaSizes(pizzaria1) {
+function render_pizzaSizes(pizzeria1) {
   let htmlOutput = [];
 
-  for (let prop in pizzaria1.pizzaSizesPrice) {
+  for (let prop in pizzeria1.pizzaSizesPrice) {
     htmlOutput.push(`<label class="btn btn-secondary">\n\t<input type="radio" name="pizza-size" id="${prop}" autocomplete="off">${ui_makeFirstCharUpper(prop)}</label>\n`);
     }
     return htmlOutput.join("");
   }
 
-function render_pizzaToppings(pizzaria1) {
+function render_pizzaToppings(pizzeria1) {
   let htmlOutput = [];
 
-  for (let prop in pizzaria1.pizzaToppingsPrice){
-    htmlOutput.push(`<div class="form-check">\n\t<input class="form-check-input" type="checkbox" value="${prop}" id="${prop}">\n\t<label class="form-check-label" for="${prop}">${ui_makeFirstCharUpper(prop)}</label>\n</div>\n`);
+  for (let prop in pizzeria1.pizzaToppingsPrice){
+    htmlOutput.push(`<div class="form-check">\n\t<input class="form-check-input" name="toppings" type="checkbox" value="${prop}" id="${prop}">\n\t<label class="form-check-label" for="${prop}">${ui_makeFirstCharUpper(prop)}</label>\n</div>\n`);
   }
   return htmlOutput.join("");
 }
 
-function piePreparer(pizzaria1) {
+function piePreparer(pizzeria1, size, toppings) {
   var pizzaSize;
 
   $("input[name=pizza-size]:checked").length ? (pizzaSize = $("input[name=pizza-size]:checked").prop("id")) : (pizzaSize = "small");
 
-  pizzaria1.newPie(pizzaSize);
-  var currentPizza = pizzaria1.orderUp[pizzaria1.orderUp.length-1];
+  pizzeria1.newPie(pizzaSize);
+  var currentPizza = pizzeria1.orderUp[pizzeria1.orderUp.length-1];
 
   $("input[type=checkbox]:checked").each(function(){
     var top = $(this).val();
     currentPizza.addToppings(top.toString());
   })
 
-  pizzaria1.calcPrice(currentPizza);
+  pizzeria1.calcPrice(currentPizza);
 
   var pizzaSummary = `<p>One <span style="text-decoration: underline;">${currentPizza.size}</span> pizza with:</p>
   <ul>${listBuilder(currentPizza.toppings)}</ul>
@@ -109,9 +108,8 @@ function listBuilder(toppings) {
   return htmlOutput.join("")
 }
 
-function pieViewer(pizzaria1) {
-  // console.log(pizzaria1);
-  let currentPizza = pizzaria1.orderUp[pizzaria1.orderUp.length-1]
+function pieViewer(pizzeria1) {
+  let currentPizza = pizzeria1.orderUp[pizzeria1.orderUp.length-1]
 
   let htmlOutput = `<div class="card">
       <div class="card-header" id="pizzaHeading${currentPizza.pizzaId}">
@@ -123,58 +121,54 @@ function pieViewer(pizzaria1) {
         <div class="card-body">
           <p>One ${currentPizza.size} pizza with: </p>
           <ul>${listBuilder(currentPizza.toppings)}</ul>
-          <div>
-          <button type="button" class="btn btn-primary" id="delivery">
+          <div>${currentPizza.delivery ? (`<button type="button" class="btn btn-primary" id="delivery">
             Delivery <span class="badge badge-light">🚚</span>
-          </button>
-
-          <i class="fas fa-trash-alt float-right"></i>
-
+          </button>`):('')}
+          <i class="fas fa-trash-alt float-right" id="pizza-id-${currentPizza.pizzaId}"></i>
           </div>
-
         </div>
       </div>
     </div>`;
 
-  // let htmlOutput = `<li>${currentPizza.size} pizza\t\t\t\t$${currentPizza.price}</li>`
-
   return htmlOutput
-
 }
 
 $(function() {
-  // onload
-  // inits a new pizzaria
-  var pizzaria1 = new Pizzaria();
+  var pizzeria1 = new Pizzeria();
   // builds dynamic UI elemnts
-  $("#pizzeria-sizes").append(render_pizzaSizes(pizzaria1));
-  $("#pizzeria-toppings").append(render_pizzaToppings(pizzaria1));
+  $("#pizzeria-sizes").append(render_pizzaSizes(pizzeria1));
+  $("#pizzeria-toppings").append(render_pizzaToppings(pizzeria1));
+
+  var liveSize;
+  var liveToppings;
+
+  $("input").change(function() {
+    liveSize = $("input[name=pizza-size]:checked").prop("id")
+    liveToppings =[];
+
+    $("input[name=toppings]:checked").each(function() {
+      liveToppings.push(this.id)
+    });
+
+  });
 
   $("#review").click(function(){
-    $("#pizza-summary").html(piePreparer(pizzaria1));
+    console.log(liveToppings)
+    $("#pizza-summary").html(piePreparer(pizzeria1));
     $("#pizza-details").show();
 
-    console.log(pizzaria1)
-
+    console.log(pizzeria1)
     $("input#delivery").change(function() {
       $("input#delivery").prop("checked") ? ($("#is-delivered").text('1111')) : ($("#is-delivered").text('666'))
-
 
     })
 
 
 
-    // $("input").change(function() {
-    //   console.log('change')
-    //   $("#cancel").click();
-    // });
-
   });
 
   $("#bake").click(function() {
-
-    $("#all-pizza-orders").append(pieViewer(pizzaria1));
-    // $("#in-basket").append(pieViewer(pizzaria1));
+    $("#all-pizza-orders").append(pieViewer(pizzeria1));
     ui_orderReset();
   });
 
@@ -182,7 +176,7 @@ $(function() {
     ui_orderReset();
   });
 
-  $("#all-pizza-orders").on('click','button.close', function() {
+  $("#all-pizza-orders").on('click','i', function() {
     const regex = /\d/g;
     // console.log()
 
