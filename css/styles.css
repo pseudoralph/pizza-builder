@@ -39,8 +39,16 @@
   color: #6c757d;
 }
 
+.each-topping {
+  margin-bottom: 3px;
+}
+
+#pizza-summary {
+  margin-bottom: 20px;
+}
+
 #pizza-details {
-  display: none;
+  /* display: none; */
   margin: 20px 0 0;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;

@@ -60,9 +60,7 @@ function ui_orderReset() {
   $("input").prop("checked",false);
   $("label").removeClass("active");
 
-  $("#pizza-details").hide();
   $("#pizza-summary, #live-pricing").empty();
-  // $("#live-pricing")
 }
 
 function ui_render_pizzaSizes(pizzeria1) {
@@ -78,12 +76,12 @@ function ui_render_pizzaToppings(pizzeria1) {
   let htmlOutput = [];
 
   for (let prop in pizzeria1.pizzaToppingsPrice){
-    htmlOutput.push(`<div class="form-check">\n\t<input class="form-check-input" name="toppings" type="checkbox" value="${prop}" id="${prop}">\n\t<label class="form-check-label" for="${prop}">${ui_prettifyVars(prop)}</label>\n</div>\n`);
+    htmlOutput.push(`<div class="form-check each-topping">\n\t<input class="form-check-input" name="toppings" type="checkbox" value="${prop}" id="${prop}">\n\t<label class="form-check-label" for="${prop}">${ui_prettifyVars(prop)}</label>\n</div>\n`);
   }
   return htmlOutput.join("");
 }
 
-function bakePie(pizzeria1, size="small", toppings, deliver) {
+function bakePie(pizzeria1, size, toppings, deliver) {
   pizzeria1.newPie(size);
 
   let currentPizza = pizzeria1.orders[pizzeria1.orders.length-1];
@@ -105,9 +103,7 @@ function pieViewer(pizzeria1) {
       <div id="collapsePizza${currentPizza.pizzaId}" class="collapse hide" aria-labelledby="pizzaHeading${currentPizza.pizzaId}" data-parent="#all-pizza-orders">
         <div class="card-body">
           <p>One ${ui_prettifyVars(currentPizza.size)} pizza with
-          ${currentPizza.toppings.length ? (`: </p><ul>${ui_render_listBuilder(currentPizza.toppings)}</ul>`) : ('no toppings') }
-
-          <div>${currentPizza.delivery ? (`<button type="button" class="btn btn-primary" id="delivery">
+          ${currentPizza.toppings.length ? (`</p><ul>${ui_render_listBuilder(currentPizza.toppings)}</ul>`) : ('no toppings') }<div>${currentPizza.delivery ? (`<button type="button" class="btn btn-primary" id="delivery">
             Delivery <span class="badge badge-light">🚚</span>
           </button>`):('')}
           <i class="fas fa-trash-alt float-right" id="pizza-id-${currentPizza.pizzaId}"></i>
@@ -141,11 +137,10 @@ $(function() {
     });
 
     let livePricing = pizzeria1.calcPrice({size: liveSize, toppings: liveToppings, delivery: liveDelivery})
-
     let htmlOutput = `<p>One ${ui_prettifyVars(liveSize)} pie with ${liveToppings.length > 0 ? (liveToppings.length>1 ? (liveToppings.length+' toppings'):(liveToppings.length+' topping') ) :('no toppings')} ${liveDelivery ? ('delivered'):('')} </p>`;
 
-    $("#pizza-summary").html(htmlOutput);
-    $("#live-pricing").text("$"+livePricing)
+    liveSize ? ($("#pizza-summary").html(htmlOutput)):(null);
+    livePricing ? ($("#live-pricing").text("$"+livePricing)):(null);
   });
 
   $("#review").click(function(){
