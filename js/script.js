@@ -21,7 +21,7 @@ Pizzeria.prototype.calcPrice = function(pizza) {
     addedToppings += this.pizzaToppingsPrice[topping];
   }).bind(this));
 
-  pizza.price = basePrice + addedToppings + (pizza.delivery ? (2) : (0));
+  return pizza.price = basePrice + addedToppings + (pizza.delivery ? (2) : (0));
 }
 
 function Pizza(id,size) {
@@ -39,8 +39,11 @@ Pizza.prototype.addToppings = function(toppings) {
 // UI functions
 function ui_prettifyVars(word) {
   // makes first word upper case and changes underscore to space
-  let newWord = word.replace(/\b\w/g, word[0].toUpperCase());
-  return newWord.split("_").join(" ");
+  if (word) {
+    let newWord = word.replace(/\b\w/g, word[0].toUpperCase());
+    return newWord.split("_").join(" ");
+  }
+  return false
 }
 
 function ui_render_listBuilder(toList) {
@@ -58,7 +61,8 @@ function ui_orderReset() {
   $("label").removeClass("active");
 
   $("#pizza-details").hide();
-  $("#pizza-summary").empty();
+  $("#pizza-summary, #live-pricing").empty();
+  // $("#live-pricing")
 }
 
 function ui_render_pizzaSizes(pizzeria1) {
@@ -100,8 +104,9 @@ function pieViewer(pizzeria1) {
       </div>
       <div id="collapsePizza${currentPizza.pizzaId}" class="collapse hide" aria-labelledby="pizzaHeading${currentPizza.pizzaId}" data-parent="#all-pizza-orders">
         <div class="card-body">
-          <p>One ${currentPizza.size} pizza with: </p>
-          <ul>${ui_render_listBuilder(currentPizza.toppings)}</ul>
+          <p>One ${ui_prettifyVars(currentPizza.size)} pizza with
+          ${currentPizza.toppings.length ? (`: </p><ul>${ui_render_listBuilder(currentPizza.toppings)}</ul>`) : ('no toppings') }
+
           <div>${currentPizza.delivery ? (`<button type="button" class="btn btn-primary" id="delivery">
             Delivery <span class="badge badge-light">🚚</span>
           </button>`):('')}
@@ -134,9 +139,13 @@ $(function() {
     $("input[name=toppings]:checked").each(function() {
       liveToppings.push(this.id);
     });
-    let htmlOutput = `<p>One ${ui_prettifyVars(liveSize)}-sized pizza with: </p><ul>${ui_render_listBuilder(liveToppings)}</ul>`;
+
+    let livePricing = pizzeria1.calcPrice({size: liveSize, toppings: liveToppings, delivery: liveDelivery})
+
+    let htmlOutput = `<p>One ${ui_prettifyVars(liveSize)} pie with ${liveToppings.length > 0 ? (liveToppings.length>1 ? (liveToppings.length+' toppings'):(liveToppings.length+' topping') ) :('no toppings')} ${liveDelivery ? ('delivered'):('')} </p>`;
 
     $("#pizza-summary").html(htmlOutput);
+    $("#live-pricing").text("$"+livePricing)
   });
 
   $("#review").click(function(){
@@ -144,8 +153,10 @@ $(function() {
   });
 
   $("#bake").click(function() {
-    bakePie(pizzeria1, liveSize, liveToppings, liveDelivery);
-    $("#all-pizza-orders").append(pieViewer(pizzeria1));
+    if (liveSize && liveToppings) {
+      bakePie(pizzeria1, liveSize, liveToppings, liveDelivery);
+      $("#all-pizza-orders").append(pieViewer(pizzeria1));
+    }
 
     liveSize=null;
     liveToppings=null;
